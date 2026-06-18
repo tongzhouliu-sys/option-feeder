@@ -1,6 +1,12 @@
 """环境变量配置(强类型校验)。每个 Service 仅靠 TICKER 区分。"""
+from pathlib import Path
 from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Only load a .env file when one is actually present on disk (local development).
+# In production (Railway), environment variables are injected by the platform and
+# no .env file exists in the container, so we skip it to avoid masking real env vars.
+_env_file = ".env" if Path(".env").exists() else None
 
 
 class Settings(BaseSettings):
@@ -25,7 +31,7 @@ class Settings(BaseSettings):
     # —— 可选性能杠杆 —— 只取 DTE <= 此值的到期(None=全取,保持原行为)
     EXPIRY_DTE_MAX: Optional[int] = None
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=_env_file, env_file_encoding="utf-8")
 
 
 settings = Settings()
