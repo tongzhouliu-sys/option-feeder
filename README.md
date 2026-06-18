@@ -46,6 +46,7 @@ python -m app.main
 - Cron 服务必须 `restartPolicyType: NEVER`（已写入 `railway.json`）
 - 若单次任务超过 5 分钟，下一轮 Cron 会被跳过；大 ticker 建议设置 `EXPIRY_DTE_MAX=60`
 - 下游 Core 须已部署且 ingest 端点可从 Railway 公网访问
+- Railway 上只读平台注入的环境变量，不加载镜像内 `.env`；本地开发通过 `.env` 配置
 - 日志为 JSON 结构化输出到 stdout，可在 Railway Logs 查看 `START` / `SUCCESS` / `FAILED` / `SKIP` 等事件
 
 ## 推送协议

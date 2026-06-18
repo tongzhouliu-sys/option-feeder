@@ -1,6 +1,12 @@
 """环境变量配置(强类型校验)。每个 Service 仅靠 TICKER 区分。"""
+import os
 from typing import Optional
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def _is_railway() -> bool:
+    return bool(os.getenv("RAILWAY_ENVIRONMENT") or os.getenv("RAILWAY_SERVICE_ID"))
 
 
 class Settings(BaseSettings):
@@ -25,7 +31,10 @@ class Settings(BaseSettings):
     # —— 可选性能杠杆 —— 只取 DTE <= 此值的到期(None=全取,保持原行为)
     EXPIRY_DTE_MAX: Optional[int] = None
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(
+        env_file=None if _is_railway() else ".env",
+        env_file_encoding="utf-8",
+    )
 
 
 settings = Settings()
