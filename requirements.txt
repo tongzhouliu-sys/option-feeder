@@ -1,0 +1,7 @@
+pydantic==2.7.1
+pydantic-settings==2.3.0
+yfinance==0.2.40
+requests==2.32.3
+pandas==2.2.2
+numpy==1.26.4
+exchange-calendars==4.5.2
