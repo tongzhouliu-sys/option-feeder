@@ -6,6 +6,6 @@
   "deploy": {
     "startCommand": "python -m app.main",
     "restartPolicyType": "NEVER",
-    "cronSchedule": "*/5000 *"
+    "cronSchedule": "0 0 1 * *"
   }
 }
